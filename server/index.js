@@ -1,10 +1,12 @@
 const express = require("express");
 const app = express();
 
-app.use(express.static("client"));
+app.use(express.static("dist"));
 
-app.get("/", (request, response) => {
-    response.json({});
+app.get("/api/test", (request, response) => {
+    response.json({ test: "I'm a test message" });
 });
 
-app.listen("8081");
+app.listen(process.env.PORT || 8081, () => {
+    console.log("OLDPHONE IS LISTENING..");
+});
