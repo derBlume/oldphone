@@ -1,25 +1,19 @@
 <template>
+    <AllUpdates />
     <img alt="Vue logo" src="./assets/logo.png" />
-    <HelloWorld msg="Welcome to Your Vue.js App" />
-    {{ count }}
 </template>
 
 <script>
-    import axios from "axios";
-    import HelloWorld from "./components/HelloWorld.vue";
+    import Axios from "axios";
+    import AllUpdates from "./components/AllUpdates";
 
     export default {
         name: "App",
         components: {
-            HelloWorld,
-        },
-        computed: {
-            count() {
-                return this.$store.state.count;
-            },
+            AllUpdates,
         },
         mounted() {
-            axios.get("/api/test");
+            Axios.get("/api/test");
         },
     };
 </script>
