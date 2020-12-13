@@ -1,6 +1,6 @@
 <template>
-    <h1>All Updates for iPhone:</h1>
-    <button @click="getUpdates('iPhone')">Load</button>
+    <p>All Updates for iPhone:</p>
+    <button @click="getUpdates('iPhone SE')">Load</button>
 
     <table>
         <tr>

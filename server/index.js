@@ -5,19 +5,14 @@ const db = require("./db");
 
 app.use(express.static("dist"));
 
-app.get("/api/test", (request, response) => {
-    response.json([
-        {
-            device: "testPhone X",
-            software: "testOS 12",
-            date: "Jan 01, 2018",
-        },
-        {
-            device: "testPhone 6s",
-            software: "testOS 16",
-            date: "Jan 01, 2020",
-        },
-    ]);
+app.get("/api/devices/", async (request, response) => {
+    if (request.query.search) {
+        const { rows } = await db.findDevice(request.query.search);
+        response.json(rows);
+    } else if (request.query.id) {
+        const { rows } = await db.getDeviceById(request.query.id);
+        response.json(rows[0]);
+    }
 });
 
 app.get("/api/updates-by-device/:device", async (request, response) => {
