@@ -31,6 +31,16 @@ module.exports.getDeviceAndLater = function getDeviceAndLater({
     );
 };
 
+module.exports.getDeviceIdByNameAndBrand = function getDeviceIdByNameAndBrand({
+    brand,
+    name,
+}) {
+    return db.query(
+        `SELECT id FROM devices WHERE brand ILIKE $1 AND model ILIKE $2`,
+        [brand, name]
+    );
+};
+
 module.exports.addLineToCleanTable = function addLineToCleanTable({
     software,
     devices,
@@ -39,7 +49,7 @@ module.exports.addLineToCleanTable = function addLineToCleanTable({
     id,
 }) {
     return db.query(
-        "INSERT INTO apple_updates_clean (software, device, release_date, url, raw_id) VALUES ($1, $2, $3, $4, $5)",
+        "INSERT INTO apple_updates_clean (software, device_id, release_date, url, raw_id) VALUES ($1, $2, $3, $4, $5)",
         [software, devices, release_date, url, id]
     );
 };

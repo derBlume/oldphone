@@ -19,9 +19,9 @@ CREATE TABLE apple_updates_clean(
     raw_id INTEGER NOT NULL REFERENCES apple_updates_raw(id),
     url VARCHAR,
     software VARCHAR NOT NULL,
-    device VARCHAR NOT NULL, 
+    device_id INTEGER NOT NULL REFERENCES devices(id), 
     release_date DATE NOT NULL,
     approved BOOLEAN DEFAULT NULL,
-    UNIQUE (software, device, release_date)
+    UNIQUE (software, device_id, release_date)
 );
 

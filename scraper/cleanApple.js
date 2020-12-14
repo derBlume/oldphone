@@ -63,7 +63,7 @@ module.exports.cleanApple = async function cleanApple() {
 
     const filtered3 = [];
 
-    for await (el of filtered2) {
+    for await (const el of filtered2) {
         const matches = el.devices.match(/iPhone.*(?=( and later))/gi);
         if (matches) {
             const { rows } = await db.getDeviceAndLater({
@@ -85,9 +85,9 @@ module.exports.cleanApple = async function cleanApple() {
     console.log("No of rows after expanding -and later-", filtered3.length);
 
     // cleaning up some edge cases
-    filtered4 = [];
+    const filtered4 = [];
 
-    for (el of filtered3) {
+    for (const el of filtered3) {
         //removing inconsistencies in legacy data
         el.devices = el.devices.replace(/iOS .+ through .+ for /gi, "");
 
@@ -115,10 +115,28 @@ module.exports.cleanApple = async function cleanApple() {
 
     console.log("No of rows after cleaning up edge cases", filtered4.length);
 
+    //matching devices
+    const final = [];
+
+    for (const el of filtered4) {
+        const { rows } = await db.getDeviceIdByNameAndBrand({
+            brand: "Apple",
+            name: el.devices,
+        });
+
+        if (rows.length === 1) {
+            final.push({ ...el, devices: rows[0].id });
+        } else if (rows.length > 1) {
+            console.log("device not unique: ", el.devices);
+        } else {
+            console.log("device not found: ", el.devices);
+        }
+    }
+
     let linesAdded = 0;
     let linesIgnored = 0;
 
-    for await (el of filtered4) {
+    for await (const el of final) {
         try {
             await db.addLineToCleanTable(el);
             linesAdded++;

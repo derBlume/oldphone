@@ -1,5 +1,6 @@
 <template>
     <PickDevice />
+    <DeviceOverview />
     <AllUpdates v-if="false" />
     <!-- <img alt="Vue logo" src="./assets/logo.png" /> -->
 </template>
@@ -9,12 +10,14 @@
 
     import AllUpdates from "./components/AllUpdates";
     import PickDevice from "./components/PickDevice";
+    import DeviceOverview from "./components/DeviceOverview";
 
     export default {
         name: "App",
         components: {
             AllUpdates,
             PickDevice,
+            DeviceOverview,
         },
         mounted() {
             //Axios.get("/api/test");
