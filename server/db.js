@@ -16,8 +16,8 @@ module.exports.getDeviceById = function getDeviceById(id) {
     return db.query("SELECT * FROM devices WHERE id = $1", [id]);
 };
 
-module.exports.getUpdatesByDevice = function getUpdatesByDevice(device) {
-    return db.query("SELECT * FROM apple_updates_clean WHERE device = $1", [
-        device,
+module.exports.getUpdatesByDeviceId = function getUpdatesByDeviceId(device_id) {
+    return db.query("SELECT * FROM apple_updates_clean WHERE device_id = $1", [
+        device_id,
     ]);
 };

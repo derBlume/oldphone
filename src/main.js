@@ -12,12 +12,19 @@ const store = createStore({
             updates: [],
         };
     },
+    getters: {
+        majorUpdates(state) {
+            const majorUpdates = state.device.updates.filter(
+                (update) =>
+                    /iOS \d+(?!.)/gi.test(update.software) ||
+                    /iOS \d+.0(?!.)/gi.test(update.software)
+            );
+            return majorUpdates;
+        },
+    },
     mutations: {
         setDevice(state, data) {
             state.device = data;
-        },
-        getUpdates(state, data) {
-            state.updates = data;
         },
     },
     actions: {
@@ -31,18 +38,6 @@ const store = createStore({
                 commit("setDevice", null);
             }
         },
-
-        async getUpdates({ commit }, device) {
-            const { data } = await axios.get(
-                `/api/updates-by-device/${device}`
-            );
-
-            data.forEach((item) => {
-                console.log(item.release_date);
-            });
-
-            commit("getUpdates", data);
-        },
     },
 });
 
@@ -50,4 +45,15 @@ const app = createApp(App);
 
 // Install the store instance as a plugin
 app.use(store);
+
+app.config.globalProperties.$dates = {
+    monthYear(dateString) {
+        if (!dateString) return;
+        return new Date(dateString).toLocaleDateString("en-us", {
+            month: "long",
+            year: "numeric",
+        });
+    },
+};
+
 app.mount("#app");

@@ -53,11 +53,10 @@
     };
 </script>
 
-<style>
+<style scoped>
     .myDevice,
     .devicePicker {
         width: 100%;
-        padding: 20px;
     }
 
     input,

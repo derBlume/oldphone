@@ -1,25 +1,35 @@
 <template>
     <div class="DeviceOverview">
-        <p>{{ device.brand }} {{ device.model }}</p>
-        <p>released:</p>
-        <p>{{ release }}</p>
-        <p>major OS versions received</p>
-        <p>current version OR EOL-message</p>
-        <p>expected updates</p>
+        <p class="legend">released:</p>
+        <p>{{ $dates.monthYear(device.release_date) }}</p>
+        <p class="legend" v-if="device.discontinued_date">discontinued:</p>
+        <p>{{ $dates.monthYear(device.discontinued_date) }}</p>
+        <p class="legend">first OS:</p>
+        <p>{{ device.first_os }}</p>
+        <p class="legend">major OS versions received:</p>
+        <ul>
+            <li v-for="update in this.majorUpdates" :key="update.id">
+                {{ update.software }} ({{
+                    $dates.monthYear(update.release_date)
+                }})
+            </li>
+        </ul>
     </div>
 </template>
 
 <script>
-    import { mapState } from "vuex";
+    import { mapGetters, mapState } from "vuex";
 
     export default {
         computed: {
             ...mapState(["device"]),
-            /* release() {
-                return this.device.release_date;
-            }, */
+            ...mapGetters(["majorUpdates"]),
         },
     };
 </script>
 
-<style></style>
+<style>
+    .DeviceOverview {
+        padding-top: 10px;
+    }
+</style>

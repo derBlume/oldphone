@@ -1,26 +1,24 @@
 <template>
-    <PickDevice />
-    <DeviceOverview />
-    <AllUpdates v-if="false" />
-    <!-- <img alt="Vue logo" src="./assets/logo.png" /> -->
+    <DevicePicker />
+    <DeviceOverview v-if="device" />
 </template>
 
 <script>
-    //import Axios from "axios";
-
-    import AllUpdates from "./components/AllUpdates";
-    import PickDevice from "./components/PickDevice";
+    import DevicePicker from "./components/DevicePicker";
     import DeviceOverview from "./components/DeviceOverview";
+    import { mapState } from "vuex";
 
     export default {
         name: "App",
         components: {
-            AllUpdates,
-            PickDevice,
+            DevicePicker,
             DeviceOverview,
         },
         mounted() {
             //Axios.get("/api/test");
+        },
+        computed: {
+            ...mapState(["device"]),
         },
     };
 </script>
@@ -42,7 +40,7 @@
         display: flex;
         flex-direction: column;
         color: var(--text-main-color-color);
-        margin-top: 10px;
+        margin: 10px;
     }
     a {
         text-decoration: none;
