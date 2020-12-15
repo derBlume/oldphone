@@ -8,16 +8,11 @@
 </template>
 
 <script>
-    import { mapState } from "vuex";
-
     export default {
         name: "App",
         components: {},
         mounted() {
             //Axios.get("/api/test");
-        },
-        computed: {
-            ...mapState(["device"]),
         },
     };
 </script>

@@ -21,3 +21,30 @@ module.exports.getUpdatesByDeviceId = function getUpdatesByDeviceId(device_id) {
         device_id,
     ]);
 };
+
+module.exports.getUpdatesByRawId = function getUpdatesByRawId(raw_id) {
+    return db.query(
+        `SELECT 
+                apple_updates_clean.id AS id,
+                apple_updates_clean.created_at AS created_at,
+                apple_updates_clean.raw_id AS raw_id,
+                apple_updates_clean.url AS url,
+                apple_updates_clean.software AS software,
+                apple_updates_clean.device_id AS device_id,
+                apple_updates_clean.release_date AS release_date,
+                apple_updates_clean.approved AS approved,
+                CONCAT(devices.brand, ' ', devices.model) AS device
+            FROM apple_updates_clean 
+                JOIN devices ON apple_updates_clean.device_id=devices.id 
+            WHERE apple_updates_clean.raw_id = $1`,
+        [raw_id]
+    );
+};
+
+module.exports.getRawByApproved = function getRawByApproved(approved) {
+    if (approved === null) {
+        return db.query(
+            "SELECT * FROM apple_updates_raw WHERE approved IS NULL"
+        );
+    }
+};

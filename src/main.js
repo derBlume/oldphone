@@ -21,10 +21,24 @@ const store = createStore({
             );
             return majorUpdates;
         },
+        rawUsed(state) {
+            return state.updates.filter((update) => update.clean_rows.length);
+        },
+        rawIgnored(state) {
+            return state.updates.filter((update) => !update.clean_rows.length);
+        },
+        cleanById: (state, getters) => (id) => {
+            getters.rawUsed.filter((raw) =>
+                raw.clean_rows.filter((clean) => clean.id === id)
+            );
+        },
     },
     mutations: {
         setDevice(state, data) {
             state.device = data;
+        },
+        setUpdates(state, data) {
+            state.updates = data;
         },
     },
     actions: {
@@ -38,6 +52,10 @@ const store = createStore({
                 commit("setDevice", null);
             }
         },
+        async fetchUpdates({ commit }) {
+            const { data } = await axios.get("/api/admin/updates/");
+            commit("setUpdates", data);
+        },
     },
 });
 
@@ -50,6 +68,15 @@ app.config.globalProperties.$dates = {
         if (!dateString) return;
 
         return new Date(dateString).toLocaleDateString("en-us", {
+            month: "long",
+            year: "numeric",
+        });
+    },
+    dayMonthYear(dateString) {
+        if (!dateString) return;
+
+        return new Date(dateString).toLocaleDateString("en-us", {
+            day: "numeric",
             month: "long",
             year: "numeric",
         });

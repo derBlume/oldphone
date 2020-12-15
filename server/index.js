@@ -16,6 +16,19 @@ app.get("/api/devices/", async (request, response) => {
     }
 });
 
+app.get("/api/admin/updates", async (request, response) => {
+    const raw = await db.getRawByApproved(null);
+
+    let composed = [];
+    for await (const row of raw.rows) {
+        const clean = await db.getUpdatesByRawId(row.id);
+
+        composed.push({ ...row, clean_rows: [...clean.rows] });
+    }
+
+    response.json(composed);
+});
+
 app.listen(process.env.PORT || 8081, () => {
     console.log("OLDPHONE IS LISTENING..");
 });

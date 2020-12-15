@@ -1,11 +1,15 @@
 <template>
     <div class="Backend">
-        <p>Backend</p>
+        <BackendUpdates />
     </div>
 </template>
 
 <script>
-    export default {};
+    import BackendUpdates from "../components/BackendUpdates.vue";
+    export default {
+        components: { BackendUpdates },
+        name: "Backend",
+    };
 </script>
 
 <style></style>
