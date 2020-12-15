@@ -49,6 +49,7 @@ app.use(store);
 app.config.globalProperties.$dates = {
     monthYear(dateString) {
         if (!dateString) return;
+
         return new Date(dateString).toLocaleDateString("en-us", {
             month: "long",
             year: "numeric",
