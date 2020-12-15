@@ -3,8 +3,8 @@ import { createApp } from "vue";
 import { createStore } from "vuex";
 
 import App from "./App.vue";
+import router from "./router";
 
-// Create a new store instance.
 const store = createStore({
     state() {
         return {
@@ -42,8 +42,7 @@ const store = createStore({
 });
 
 const app = createApp(App);
-
-// Install the store instance as a plugin
+app.use(router);
 app.use(store);
 
 app.config.globalProperties.$dates = {

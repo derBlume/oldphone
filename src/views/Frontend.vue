@@ -1,16 +1,19 @@
 <template>
     <div class="Frontend">
-        <p>Frontend</p>
         <DevicePicker />
         <DeviceOverview v-if="device" />
     </div>
 </template>
 
 <script>
-    import DevicePicker from "./DevicePicker";
-    import DeviceOverview from "./DeviceOverview";
+    import DevicePicker from "@/components/DevicePicker";
+    import DeviceOverview from "@/components/DeviceOverview";
+    import { mapState } from "vuex";
     export default {
         components: { DevicePicker, DeviceOverview },
+        computed: {
+            ...mapState(["device"]),
+        },
     };
 </script>
 

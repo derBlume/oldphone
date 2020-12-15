@@ -11,18 +11,11 @@
         </p>
         <button @click="makeDuh">Test</button>
         <button @click="incrementBy(8)">Add 8</button>
-
-        <p>Done ToDos: {{ doneTodos[0] }}</p>
-        <p>a message from the store: {{ message }}</p>
-        <p>count in HelloWorld.vue: {{ count }}</p>
-        <!-- <p>count accessed via aliasBlibla: {{ AliasBlibla }}</p>
-        <p>countPlusLocalState: {{ countPlusLocalState }}</p> -->
-        <p>testdata local in HelloWorld: {{ testdata }}</p>
     </div>
 </template>
 
 <script>
-    import { mapState, mapGetters, mapMutations } from "vuex";
+    import { mapMutations } from "vuex";
     export default {
         name: "HelloWorld",
         data() {
@@ -47,21 +40,6 @@
         },
         props: {
             msg: String,
-        },
-        computed: {
-            ...mapState(
-                ["count", "message"]
-                /* {
-            //_arrow_ function only works with mapState
-            count: (state) => state.count,
-            AliasBlibla: "count",
-            //_normal_ function can access local data via "this"
-            countPlusLocalState(state) {
-                return state.count + this.localCount;
-            },
-        } */
-            ),
-            ...mapGetters(["doneTodos", "doneTodosCount", "getTodoById"]),
         },
     };
 </script>

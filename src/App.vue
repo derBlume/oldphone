@@ -1,19 +1,18 @@
 <template>
-    <Backend />
-    <Frontend />
+    <div id="nav">
+        <RouterLink to="/">Frontend</RouterLink> |
+        <RouterLink to="/backend">Backend</RouterLink> |
+        <RouterLink to="/about">About</RouterLink>
+    </div>
+    <RouterView />
 </template>
 
 <script>
-    import Backend from "./components/Backend";
-    import Frontend from "./components/Frontend";
     import { mapState } from "vuex";
 
     export default {
         name: "App",
-        components: {
-            Backend,
-            Frontend,
-        },
+        components: {},
         mounted() {
             //Axios.get("/api/test");
         },
@@ -46,6 +45,11 @@
         text-decoration: none;
         color: inherit;
     }
+
+    a.router-link-exact-active {
+        color: var(--text-emph-color);
+    }
+
     .legend {
         color: var(--text-light-color);
         font-size: 0.7em;

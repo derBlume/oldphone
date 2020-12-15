@@ -16,11 +16,6 @@ app.get("/api/devices/", async (request, response) => {
     }
 });
 
-/* app.get("/api/updates-by-device/:device", async (request, response) => {
-    const { rows } = await db.getUpdatesByDevice(request.params.device);
-    response.json(rows);
-}); */
-
 app.listen(process.env.PORT || 8081, () => {
     console.log("OLDPHONE IS LISTENING..");
 });
