@@ -4,6 +4,7 @@ const app = express();
 const db = require("./db");
 
 app.use(express.static("dist"));
+app.use(express.json());
 
 app.get("/api/devices/", async (request, response) => {
     if (request.query.search) {
@@ -17,16 +18,24 @@ app.get("/api/devices/", async (request, response) => {
 });
 
 app.get("/api/admin/updates", async (request, response) => {
-    const raw = await db.getRawByApproved(null);
-
-    let composed = [];
-    for await (const row of raw.rows) {
-        const clean = await db.getUpdatesByRawId(row.id);
-
-        composed.push({ ...row, clean_rows: [...clean.rows] });
+    let raw = [];
+    let clean = [];
+    if (request.query.raw === "all") {
+        const { rows } = await db.getRawAll();
+        raw = rows;
+    }
+    if (request.query.clean === "all") {
+        const { rows } = await db.getCleanAll();
+        clean = rows;
     }
 
-    response.json(composed);
+    response.json({ raw, clean });
+});
+
+app.post("/api/admin/updates/approve", async (request, response) => {
+    console.log(request.body);
+    const { rows } = await db.updateApproved(request.body);
+    response.json(rows[0]);
 });
 
 app.listen(process.env.PORT || 8081, () => {

@@ -11,9 +11,6 @@
     export default {
         name: "App",
         components: {},
-        mounted() {
-            //Axios.get("/api/test");
-        },
     };
 </script>
 

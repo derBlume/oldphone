@@ -12,6 +12,7 @@
                     <span v-if="row.approved === null">? </span>
                     <span v-if="row.approved === true">O </span>
                     <span v-if="row.approved === false">X</span>
+
                     <BackendUpdatesApprover :id="row.id" />
                 </td>
                 <td>{{ row.software }}</td>

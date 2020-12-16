@@ -1,19 +1,25 @@
 <template>
     <div class="BackendUpdatesApprover">
-        <!-- <form>
+        <form>
             <input
                 type="radio"
                 name="approved"
-                value="true"
+                :value="true"
                 v-model="approved"
             />
-            <input type="radio" name="approved" value="null" />
-            <input type="radio" name="approved" value="false" />
-        </form> -->
-        {{ id }}
-        <!-- <span v-if="approved === null">? </span>
-        <span v-if="approved === true">O </span>
-        <span v-if="approved === false">X</span> -->
+            <input
+                type="radio"
+                name="approved"
+                :value="null"
+                v-model="approved"
+            />
+            <input
+                type="radio"
+                name="approved"
+                :value="false"
+                v-model="approved"
+            />
+        </form>
     </div>
 </template>
 
@@ -21,6 +27,20 @@
     export default {
         name: "BackendUpdatesApprover",
         props: ["id"],
+        computed: {
+            approved: {
+                get() {
+                    return this.$store.getters.approvedById(this.id);
+                },
+                set(value) {
+                    this.$store.dispatch("updateApproved", {
+                        id: this.id,
+                        approved: value,
+                        old_approved: this.approved,
+                    });
+                },
+            },
+        },
     };
 </script>
 

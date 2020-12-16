@@ -1,7 +1,7 @@
 <template>
     <div class="BackendUpdates">
         <BackendUpdatesRawGrouped
-            v-for="update in rawUsed"
+            v-for="update in cleanGroupedByRaw.used"
             :key="update.id"
             :data="update"
         />
@@ -16,13 +16,14 @@
         name: "BackendUpdates",
         computed: {
             ...mapState(["updates"]),
-            ...mapGetters(["rawUsed", "rawIgnored"]),
+            ...mapGetters(["cleanGroupedByRaw"]),
         },
         methods: {
             ...mapActions(["fetchUpdates"]),
         },
         mounted() {
-            this.fetchUpdates();
+            //this.fetchUpdates();
+            this.$store.dispatch("fetchUpdates");
         },
     };
 </script>

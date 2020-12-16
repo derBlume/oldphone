@@ -9,9 +9,10 @@ const store = createStore({
     state() {
         return {
             device: null,
-            updates: [],
+            updates: { raw: [], clean: [] },
         };
     },
+
     getters: {
         majorUpdates(state) {
             const majorUpdates = state.device.updates.filter(
@@ -21,18 +22,30 @@ const store = createStore({
             );
             return majorUpdates;
         },
-        rawUsed(state) {
-            return state.updates.filter((update) => update.clean_rows.length);
+
+        cleanGroupedByRaw(state) {
+            const composed = { used: [], ignored: [] };
+            state.updates.raw.forEach((raw_row) => {
+                const clean_rows = state.updates.clean.filter(
+                    (clean_row) => clean_row.raw_id === raw_row.id
+                );
+                if (clean_rows.length) {
+                    composed.used.push({ ...raw_row, clean_rows });
+                } else {
+                    composed.ignored.push(raw_row);
+                }
+            });
+            return composed;
         },
-        rawIgnored(state) {
-            return state.updates.filter((update) => !update.clean_rows.length);
-        },
-        cleanById: (state, getters) => (id) => {
-            getters.rawUsed.filter((raw) =>
-                raw.clean_rows.filter((clean) => clean.id === id)
-            );
+
+        approvedById: (state) => (id) => {
+            const approved = state.updates.clean.find(
+                (clean_row) => clean_row.id === id
+            ).approved;
+            return approved;
         },
     },
+
     mutations: {
         setDevice(state, data) {
             state.device = data;
@@ -40,11 +53,17 @@ const store = createStore({
         setUpdates(state, data) {
             state.updates = data;
         },
+        setApproved(state, payload) {
+            state.updates.clean.find(
+                (clean_row) => clean_row.id === payload.id
+            ).approved = payload.approved;
+        },
     },
+
     actions: {
         async fetchDevice({ commit }, device_id) {
             if (device_id) {
-                const { data } = await axios.get(`/api/devices/`, {
+                const { data } = await axios.get("/api/devices/", {
                     params: { id: device_id },
                 });
                 commit("setDevice", data);
@@ -52,9 +71,28 @@ const store = createStore({
                 commit("setDevice", null);
             }
         },
+
         async fetchUpdates({ commit }) {
-            const { data } = await axios.get("/api/admin/updates/");
+            const { data } = await axios.get("/api/admin/updates/", {
+                params: { raw: "all", clean: "all" },
+            });
             commit("setUpdates", data);
+        },
+
+        async updateApproved({ commit }, payload) {
+            try {
+                const { data } = await axios.post(
+                    "/api/admin/updates/approve",
+                    payload
+                );
+
+                commit("setApproved", {
+                    id: data.id,
+                    approved: data.approved,
+                });
+            } catch (error) {
+                console.log("Error updating Approved-Status: ", error);
+            }
         },
     },
 });
