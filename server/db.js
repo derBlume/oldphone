@@ -16,10 +16,21 @@ module.exports.getDeviceById = function getDeviceById(id) {
     return db.query("SELECT * FROM devices WHERE id = $1", [id]);
 };
 
+module.exports.getDevicesAll = function getDevicesAll() {
+    return db.query("SELECT * FROM devices");
+};
+
 module.exports.getUpdatesByDeviceId = function getUpdatesByDeviceId(device_id) {
-    return db.query("SELECT * FROM apple_updates_clean WHERE device_id = $1", [
-        device_id,
-    ]);
+    return db.query(
+        "SELECT * FROM apple_updates_clean WHERE device_id = $1 ORDER BY release_date DESC",
+        [device_id]
+    );
+};
+
+module.exports.getLatestOs = function getLatestOs() {
+    return db.query(
+        `SELECT software FROM apple_updates_clean ORDER BY release_date DESC LIMIT 1`
+    );
 };
 
 // BACKEND FUNCTIONALITY: ---------------------------------------------

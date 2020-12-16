@@ -36,7 +36,6 @@
                     this.$store.dispatch("updateApproved", {
                         id: this.id,
                         approved: value,
-                        old_approved: this.approved,
                     });
                 },
             },

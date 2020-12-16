@@ -2,6 +2,7 @@ const express = require("express");
 const app = express();
 
 const db = require("./db");
+const predictions = require("./predictions");
 
 app.use(express.static("dist"));
 app.use(express.json());
@@ -13,7 +14,14 @@ app.get("/api/devices/", async (request, response) => {
     } else if (request.query.id) {
         const device = await db.getDeviceById(request.query.id);
         const updates = await db.getUpdatesByDeviceId(request.query.id);
-        response.json({ ...device.rows[0], updates: updates.rows });
+        const latest_os = await db.getLatestOs();
+        const avg_support = await predictions.getAvgSupport(request.query.id);
+        response.json({
+            ...device.rows[0],
+            updates: updates.rows,
+            latest_os: latest_os.rows[0].software, //TODO: FIX DATA!
+            avg_support: avg_support,
+        });
     }
 });
 
@@ -33,7 +41,6 @@ app.get("/api/admin/updates", async (request, response) => {
 });
 
 app.post("/api/admin/updates/approve", async (request, response) => {
-    console.log(request.body);
     const { rows } = await db.updateApproved(request.body);
     response.json(rows[0]);
 });

@@ -50,6 +50,7 @@ const store = createStore({
         setDevice(state, data) {
             state.device = data;
         },
+
         setUpdates(state, data) {
             state.updates = data;
         },
@@ -63,10 +64,11 @@ const store = createStore({
     actions: {
         async fetchDevice({ commit }, device_id) {
             if (device_id) {
-                const { data } = await axios.get("/api/devices/", {
+                const device = await axios.get("/api/devices/", {
                     params: { id: device_id },
                 });
-                commit("setDevice", data);
+
+                commit("setDevice", device.data);
             } else {
                 commit("setDevice", null);
             }
