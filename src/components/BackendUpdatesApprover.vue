@@ -43,4 +43,8 @@
     };
 </script>
 
-<style></style>
+<style>
+    form {
+        width: 50px;
+    }
+</style>

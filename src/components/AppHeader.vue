@@ -14,6 +14,8 @@
     h1 {
         width: 100%;
         text-align: center;
+        padding: 5px;
+        color: inherit;
     }
     span {
         visibility: hidden;

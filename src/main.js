@@ -24,6 +24,23 @@ const store = createStore({
             );
             return majorUpdates.reverse();
         },
+        latestOsReceived(state) {
+            const latest = state.device.latest_os.match(/\d+/i);
+            const device = state.device.updates[0].software.match(/\d+/i);
+            console.log(latest);
+            console.log(device);
+
+            return latest[0] === device[0];
+        },
+        supportTimeLeft(state) {
+            const duration = state.device.avg_support;
+
+            const gone = new Date() - new Date(state.device.release_date);
+
+            return Math.floor(
+                (duration - gone) / (1000 * 60 * 60 * 24 * (365 / 12))
+            );
+        },
 
         cleanGroupedByRaw(state) {
             const composed = { used: [], ignored: [] };

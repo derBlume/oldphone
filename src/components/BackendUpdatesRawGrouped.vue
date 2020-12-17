@@ -9,9 +9,9 @@
             </tr>
             <tr v-for="row in data.clean_rows" :key="row.id">
                 <td>
-                    <span v-if="row.approved === null">? </span>
-                    <span v-if="row.approved === true">O </span>
-                    <span v-if="row.approved === false">X</span>
+                    <span :class="{ active: row.approved === true }">✓ </span>
+                    <span :class="{ active: row.approved === null }">? </span>
+                    <span :class="{ active: row.approved === false }"> ✗</span>
 
                     <BackendUpdatesApprover :id="row.id" />
                 </td>
@@ -32,9 +32,17 @@
     };
 </script>
 
-<style>
+<style scoped>
+    table {
+        width: 100%;
+        margin: 20px 0;
+    }
     th,
     td {
         border: 1px solid black;
+    }
+
+    .active {
+        font-weight: bold;
     }
 </style>

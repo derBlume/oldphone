@@ -12,4 +12,8 @@
     };
 </script>
 
-<style></style>
+<style>
+    .Backend {
+        font-size: smaller;
+    }
+</style>

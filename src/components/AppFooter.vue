@@ -115,10 +115,6 @@
         border-top: 2px solid var(--text-emph-color);
     }
 
-    img {
-        height: 100%;
-    }
-
     a {
         height: var(--footer-height);
         width: var(--footer-height);

@@ -36,7 +36,7 @@
         -moz-osx-font-smoothing: grayscale;
         display: flex;
         flex-direction: column;
-        color: var(--text-main-color-color);
+        color: var(--text-main-color);
     }
     main {
         position: fixed;
@@ -45,6 +45,9 @@
         overflow: scroll;
         width: 100vw;
         padding: var(--main-elm-padding);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
     }
 
     a {
@@ -58,6 +61,7 @@
 
     .legend {
         color: var(--text-light-color);
-        font-size: 0.7em;
+        font-size: 0.8em;
+        margin-top: 0.2em;
     }
 </style>
