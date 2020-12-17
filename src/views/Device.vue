@@ -1,5 +1,5 @@
 <template>
-    <div class="Frontend">
+    <div class="Device">
         <DevicePicker />
         <DeviceOverview v-if="device" />
     </div>
@@ -17,4 +17,9 @@
     };
 </script>
 
-<style></style>
+<style scoped>
+    .Device {
+        width: 100%;
+        height: 100%;
+    }
+</style>

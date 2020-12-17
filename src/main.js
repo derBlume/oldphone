@@ -1,6 +1,8 @@
 import axios from "axios";
 import { createApp } from "vue";
 import { createStore } from "vuex";
+import "bulma/css/bulma.min.css";
+import "bulma-timeline/dist/css/bulma-timeline.min.css";
 
 import App from "./App.vue";
 import router from "./router";
@@ -20,7 +22,7 @@ const store = createStore({
                     /iOS \d+(?!.)/gi.test(update.software) ||
                     /iOS \d+.0(?!.)/gi.test(update.software)
             );
-            return majorUpdates;
+            return majorUpdates.reverse();
         },
 
         cleanGroupedByRaw(state) {
@@ -104,6 +106,13 @@ app.use(router);
 app.use(store);
 
 app.config.globalProperties.$dates = {
+    year(dateString) {
+        if (!dateString) return;
+
+        return new Date(dateString).toLocaleDateString("en-us", {
+            year: "numeric",
+        });
+    },
     monthYear(dateString) {
         if (!dateString) return;
 

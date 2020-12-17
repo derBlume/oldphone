@@ -1,13 +1,20 @@
 import { createRouter, createWebHistory } from "vue-router";
-import Frontend from "../views/Frontend";
+
+import Home from "../views/Home";
+import Device from "../views/Device";
 import Backend from "../views/Backend";
 import NotFound from "../views/NotFound";
 
 const routes = [
     {
         path: "/",
-        name: "Frontend",
-        component: Frontend,
+        name: "Home",
+        component: Home,
+    },
+    {
+        path: "/device",
+        name: "Device",
+        component: Device,
     },
     {
         path: "/backend",

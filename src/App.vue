@@ -1,16 +1,18 @@
 <template>
-    <div id="nav">
-        <RouterLink to="/">Frontend</RouterLink> |
-        <RouterLink to="/backend">Backend</RouterLink> |
-        <RouterLink to="/about">About</RouterLink>
-    </div>
-    <RouterView />
+    <AppHeader />
+    <main>
+        <RouterView />
+    </main>
+
+    <AppFooter />
 </template>
 
 <script>
+    import AppFooter from "./components/AppFooter.vue";
+    import AppHeader from "./components/AppHeader.vue";
     export default {
         name: "App",
-        components: {},
+        components: { AppHeader, AppFooter },
     };
 </script>
 
@@ -19,9 +21,13 @@
         --text-main-color: rgb(44, 62, 80);
         --text-emph-color: rgb(55, 173, 112);
         --text-light-color: rgb(73, 103, 133);
+        --footer-height: 50px;
+        --header-height: 50px;
+        --main-elm-padding: 5px;
     }
     * {
         margin: 0;
+        padding: 0;
         box-sizing: border-box;
     }
     #app {
@@ -31,8 +37,16 @@
         display: flex;
         flex-direction: column;
         color: var(--text-main-color-color);
-        margin: 10px;
     }
+    main {
+        position: fixed;
+        top: var(--header-height);
+        bottom: var(--footer-height);
+        overflow: scroll;
+        width: 100vw;
+        padding: var(--main-elm-padding);
+    }
+
     a {
         text-decoration: none;
         color: inherit;

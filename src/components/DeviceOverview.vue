@@ -8,7 +8,7 @@
         <p>{{ device.first_os }}</p>
         <p class="legend">major OS versions received:</p>
         <ul>
-            <li v-for="update in this.majorUpdates" :key="update.id">
+            <li v-for="update in majorUpdates" :key="update.id">
                 {{ update.software }} ({{
                     $dates.monthYear(update.release_date)
                 }})
@@ -27,6 +27,99 @@
             It is likely, that your phone will receive another
             {{ supportTimeLeft }} months of support.
         </p>
+
+        <!-- TIMELINE -->
+        <div class="timeline">
+            <header class="timeline-header">
+                <span class="tag is-medium is-primary">{{
+                    $dates.year(device.release_date)
+                }}</span>
+            </header>
+            <div class="timeline-item">
+                <div class="timeline-marker is-primary"></div>
+                <div class="timeline-content">
+                    <p class="heading">
+                        {{ $dates.monthYear(device.release_date) }}
+                    </p>
+                    <p>Introduction of {{ device.model }}</p>
+                    <p>with iOS {{ device.first_os }}</p>
+                </div>
+            </div>
+
+            <div
+                v-for="update in [...device.updates].reverse()"
+                :key="update.id"
+            >
+                <header
+                    class="timeline-header"
+                    v-if="$dates.year(update.release_date) > this.lastYear"
+                >
+                    <span class="tag is-primary">{{
+                        $dates.year(update.release_date)
+                    }}</span>
+                </header>
+
+                <div class="timeline-item">
+                    <div
+                        class="timeline-marker"
+                        :class="{
+                            'is-primary':
+                                /iOS \d+(?!.)/gi.test(update.software) ||
+                                /iOS \d+.0(?!.)/gi.test(update.software),
+                        }"
+                    ></div>
+                    <div class="timeline-content">
+                        <p class="heading">
+                            {{ $dates.monthYear(update.release_date) }}
+                        </p>
+                        <p>
+                            {{ update.software }}
+                            <span v-show="false">
+                                {{
+                                    (this.lastYear = $dates.year(
+                                        update.release_date
+                                    ))
+                                }}
+                            </span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div v-if="!latestOsReceived">
+                <div class="timeline-item">
+                    <div class="timeline-marker is-danger"></div>
+                    <div class="timeline-content">
+                        <p class="heading">support ended</p>
+                        <p>This phone did not receive any more updates</p>
+                    </div>
+                </div>
+
+                <header class="timeline-header">
+                    <span class="tag is-medium is-primary is-danger">{{
+                        parseInt(lastYear) + 1
+                    }}</span>
+                </header>
+            </div>
+            <div v-else>
+                <div class="timeline-item">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <p class="heading">currently supported</p>
+                        <p>
+                            This phone received the latest version of iOS, which
+                            will get support at least until September 2021!
+                        </p>
+                    </div>
+                </div>
+
+                <header class="timeline-header">
+                    <span class="tag is-medium is-primary">{{
+                        parseInt(lastYear) + 1
+                    }}</span>
+                </header>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -34,6 +127,11 @@
     import { mapGetters, mapState } from "vuex";
 
     export default {
+        data() {
+            return {
+                lastYear: 0,
+            };
+        },
         computed: {
             ...mapState(["device"]),
             ...mapGetters(["majorUpdates"]),
