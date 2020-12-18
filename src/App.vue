@@ -61,7 +61,8 @@
 
     .legend {
         color: var(--text-light-color);
-        font-size: 0.8em;
-        margin-top: 0.2em;
+        font-size: 1em;
+        /* margin-top: 0.2em; */
+        font-variant: all-small-caps;
     }
 </style>

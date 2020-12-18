@@ -25,12 +25,19 @@
             <p class="strong">Node.js</p>
             <p>Express</p>
             <p>jsdom</p>
+            <p>PostgreSQL</p>
         </div>
         <div>
             <p class="strong">Icons:</p>
             <p>
                 Made by Made <br />
                 from the Noun Project
+            </p>
+        </div>
+        <div>
+            <p class="strong">Illustrations:</p>
+            <p>
+                unDraw
             </p>
         </div>
 

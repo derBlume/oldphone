@@ -34,6 +34,9 @@
                 </a>
             </div>
         </div>
+        <div class="illu">
+            <img src="@/assets/illu-search.svg" alt="" />
+        </div>
     </div>
 </template>
 
@@ -89,6 +92,8 @@
         border: 2px solid var(--text-emph-color);
         border-radius: 5px;
         font-size: inherit;
+        font-weight: inherit;
+        font-family: inherit;
         padding: 0 5px;
     }
 
@@ -103,6 +108,17 @@
 
     .results {
         width: 90%;
+        height: 100%;
         align-self: center;
+        background-color: white;
+    }
+
+    .illu {
+        width: 80%;
+        position: fixed;
+        bottom: 70px;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: -5;
     }
 </style>

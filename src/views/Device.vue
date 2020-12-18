@@ -1,6 +1,7 @@
 <template>
     <div class="Device">
         <DevicePicker />
+
         <Swiper
             :slides-per-view="1"
             auto-height

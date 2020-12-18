@@ -1,6 +1,6 @@
 <template>
     <div class="Home">
-        <img src="@/assets/big-phone.svg" alt="" />
+        <img src="@/assets/illu-home.svg" alt="" />
         <p>
             The most sustainable phone is the one you already have. But how long
             will it receive updates? <br />

@@ -11,7 +11,7 @@
                 <td>
                     <span :class="{ active: row.approved === true }">✓ </span>
                     <span :class="{ active: row.approved === null }">? </span>
-                    <span :class="{ active: row.approved === false }"> ✗</span>
+                    <span :class="{ active: row.approved === false }"> ✗ </span>
 
                     <BackendUpdatesApprover :id="row.id" />
                 </td>
@@ -42,6 +42,16 @@
         border: 1px solid black;
     }
 
+    th:first-child,
+    td:first-child {
+        width: 60px;
+        text-align: center;
+    }
+
+    th:nth-child(4),
+    td:nth-child(4) {
+        width: 180px;
+    }
     .active {
         font-weight: bold;
     }
