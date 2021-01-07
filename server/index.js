@@ -25,6 +25,38 @@ app.get("/api/devices/", async (request, response) => {
     }
 });
 
+app.get("/api/devices/experimental/", async (request, response) => {
+    if (request.query.search) {
+        let results = [];
+        const words = request.query.search.split(" ");
+        console.log(words);
+
+        for await (let word of words) {
+            if (word) {
+                const { rows } = await db.findDevice(word);
+                results = [...results, ...rows];
+            }
+        }
+
+        const filtered = results.filter(
+            (v, i, a) => a.findIndex((t) => t.id === v.id) === i
+        );
+
+        response.json(filtered);
+    } else if (request.query.id) {
+        const device = await db.getDeviceById(request.query.id);
+        const updates = await db.getUpdatesByDeviceId(request.query.id);
+        const latest_os = await db.getLatestOs();
+        const avg_support = await predictions.getAvgSupport(request.query.id);
+        response.json({
+            ...device.rows[0],
+            updates: updates.rows,
+            latest_os: latest_os.rows[0].software, //TODO: FIX DATA!
+            avg_support: avg_support,
+        });
+    }
+});
+
 app.get("/api/admin/updates", async (request, response) => {
     let raw = [];
     let clean = [];
