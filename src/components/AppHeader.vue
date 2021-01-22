@@ -11,6 +11,13 @@
 </script>
 
 <style scoped>
+    header {
+        position: fixed;
+        top: 0;
+        z-index: 1;
+        width: 100%;
+        background-color: white;
+    }
     h1 {
         width: 100%;
         text-align: center;

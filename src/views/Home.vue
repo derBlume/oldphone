@@ -31,4 +31,10 @@
         font-weight: bold;
         color: white;
     }
+
+    img {
+        width: 90%;
+        max-width: 500px;
+        max-height: 50%;
+    }
 </style>

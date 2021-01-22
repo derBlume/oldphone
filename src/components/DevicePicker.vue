@@ -115,10 +115,16 @@
 
     .illu {
         width: 80%;
+
         position: fixed;
         bottom: 70px;
         left: 50%;
         transform: translateX(-50%);
         z-index: -5;
+    }
+
+    img {
+        width: 100%;
+        max-height: 30vh;
     }
 </style>

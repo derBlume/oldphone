@@ -1,5 +1,5 @@
 <template>
-    <div class="about">
+    <div class="About">
         <div>
             <p>
                 made by <br />
@@ -49,7 +49,7 @@
     div {
         margin: 10px;
     }
-    .about {
+    .About {
         display: flex;
         flex-direction: column;
         align-content: center;
